@@ -25,7 +25,7 @@ func (uc SummaryUseCase) Find(id int) (*domain.Summary, error) {
 	return summary, nil
 }
 
-func (uc SummaryUseCase) CreateSummary(summaryDTO dto.SummarytDTO) (*domain.Summary, error) {
+func (uc SummaryUseCase) CreateSummary(summaryDTO *dto.SummarytDTO) (*domain.Summary, error) {
 	summary := domain.NewSummary(
 		summaryDTO.Positive,
 		summaryDTO.Negative,

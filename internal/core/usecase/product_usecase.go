@@ -25,7 +25,7 @@ func (uc ProductUsecase) Find(id int) (*domain.Product, error) {
 	return product, nil
 }
 
-func (uc *ProductUsecase) CreateProduct(productDTO dto.ProductDTO) (*domain.Product, error) {
+func (uc *ProductUsecase) CreateProduct(productDTO *dto.ProductDTO) (*domain.Product, error) {
 	product := domain.NewProduct(
 		productDTO.Name,
 		productDTO.Code,
