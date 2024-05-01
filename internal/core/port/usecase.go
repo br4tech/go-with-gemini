@@ -13,9 +13,11 @@ type (
 
 	IProductUseCase interface {
 		Find(id int) (*domain.Product, error)
-		CreateProduct(productDTO dto.ProductDTO) (*domain.Product, error)
+		CreateProduct(productDTO *dto.ProductDTO) (*domain.Product, error)
 	}
 
 	ISummaryUseCase interface {
+		Find(id int) (*domain.Summary, error)
+		CreateSummary(summaryDTO *dto.SummarytDTO) (*domain.Summary, error)
 	}
 )
