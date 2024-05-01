@@ -1,12 +1,21 @@
 package port
 
+import (
+	"github.com/br4tech/go-with-gemini/internal/core/domain"
+	"github.com/br4tech/go-with-gemini/internal/dto"
+)
+
 type (
-	ITextUseCase interface {
+	IOpinionUseCase interface {
+		Find(id int) (*domain.Opinion, error)
+		CreateOpinion(opinionDTO *dto.OpinionDTO) (*domain.Opinion, error)
 	}
 
-	IImageUseCase interface {
+	IProductUseCase interface {
+		Find(id int) (*domain.Product, error)
+		CreateProduct(productDTO dto.ProductDTO) (*domain.Product, error)
 	}
 
-	IVoiceUsecase interface {
+	ISummaryUseCase interface {
 	}
 )
