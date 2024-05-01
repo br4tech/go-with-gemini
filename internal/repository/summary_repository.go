@@ -25,14 +25,13 @@ func (r *SummaryRepository) Find(id int) (*domain.Summary, error) {
 	return summary.ToDomain(), nil
 }
 
-func (r *SummaryRepository) CreateSummary(summary *domain.Summary) error {
+func (r *SummaryRepository) CreateSummary(summary *domain.Summary) (*model.Summary, error) {
 	summaryModel := new(model.Summary)
 	summaryModel.FromDomain(summary)
 
-	result := r.db.Create(summaryModel)
-	if result.Error != nil {
-		return result.Error
+	if err := r.db.Create(summaryModel).Error; err != nil {
+		return nil, err
 	}
 
-	return nil
+	return summaryModel, nil
 }

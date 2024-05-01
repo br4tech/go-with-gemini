@@ -25,14 +25,13 @@ func (r *ProductRepository) Find(id int) (*domain.Product, error) {
 	return product.ToDomain(), nil
 }
 
-func (r *ProductRepository) CreateProduct(product *domain.Product) error {
+func (r *ProductRepository) CreateProduct(product *domain.Product) (*model.Product, error) {
 	productModel := new(model.Product)
 	productModel.FromDomain(product)
 
-	result := r.db.Create(productModel)
-	if result.Error != nil {
-		return result.Error
+	if err := r.db.Create(productModel).Error; err != nil {
+		return nil, err
 	}
 
-	return nil
+	return productModel, nil
 }

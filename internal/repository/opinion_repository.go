@@ -25,14 +25,13 @@ func (r *OpinionRepository) Find(id int) (*domain.Opinion, error) {
 	return opinion.ToDomain(), nil
 }
 
-func (r *OpinionRepository) CreateOpinion(opinion *domain.Opinion) error {
+func (r *OpinionRepository) CreateOpinion(opinion *domain.Opinion) (*model.Opinion, error) {
 	opinionModel := new(model.Opinion)
 	opinionModel.FromDomain(opinion)
 
-	result := r.db.Create(opinionModel)
-	if result.Error != nil {
-		return result.Error
+	if err := r.db.Create(opinionModel).Error; err != nil {
+		return nil, err
 	}
 
-	return nil
+	return opinionModel, nil
 }
