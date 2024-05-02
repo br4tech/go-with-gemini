@@ -8,8 +8,9 @@ import (
 
 type (
 	Config struct {
-		App App
-		Db  Db
+		App    App
+		Db     Db
+		Gemini Gemini
 	}
 
 	App struct {
@@ -24,6 +25,10 @@ type (
 		DBName   string
 		SSLMode  string
 		TimeZone string
+	}
+
+	Gemini struct {
+		ApiKey string
 	}
 )
 
@@ -49,6 +54,9 @@ func GetConfig() Config {
 			DBName:   viper.GetString("database.dbname"),
 			SSLMode:  viper.GetString("database.sslmode"),
 			TimeZone: viper.GetString("database.timezone"),
+		},
+		Gemini: Gemini{
+			ApiKey: viper.GetString("gemini.api_key"),
 		},
 	}
 }
