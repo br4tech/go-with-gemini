@@ -25,6 +25,21 @@ func (r *OpinionRepository) Find(id int) (*domain.Opinion, error) {
 	return opinion.ToDomain(), nil
 }
 
+func (r *OpinionRepository) FindByProduct(productId int) ([]*domain.Opinion, error) {
+	var opinionsModel []*model.Opinion
+
+	if err := r.db.Where("product_id = ?", productId).Find(&opinionsModel).Error; err != nil {
+		return nil, err
+	}
+
+	var opinionsDomain []*domain.Opinion
+	for _, opinion := range opinionsModel {
+		opinionsDomain = append(opinionsDomain, opinion.ToDomain())
+	}
+
+	return opinionsDomain, nil
+}
+
 func (r *OpinionRepository) CreateOpinion(opinion *domain.Opinion) (*model.Opinion, error) {
 	opinionModel := new(model.Opinion)
 	opinionModel.FromDomain(opinion)
