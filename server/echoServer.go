@@ -11,18 +11,24 @@ import (
 )
 
 type echoServer struct {
-	app         *echo.Echo
-	db          *gorm.DB
-	cfg         *config.Config
-	userHandler port.ITextUseCase
+	app            *echo.Echo
+	db             *gorm.DB
+	cfg            *config.Config
+	opinionHandler port.IOpinionHandler
+	productHandler port.IProductHandler
+	summyHandler   port.ISummaryHandler
 }
 
-func NewEchoServer(cfg *config.Config, db *gorm.DB, userHandler port.ITextUseCase) Server {
+func NewEchoServer(cfg *config.Config, db *gorm.DB,
+	opinionHandler port.IOpinionHandler,
+	productHandler port.IProductHandler,
+	summyHandler port.ISummaryHandler,
+) Server {
 	return &echoServer{
-		app:         echo.New(),
-		db:          db,
-		cfg:         cfg,
-		userHandler: userHandler,
+		app:            echo.New(),
+		db:             db,
+		cfg:            cfg,
+		opinionHandler: opinionHandler,
 	}
 }
 
@@ -31,9 +37,14 @@ func (s *echoServer) Start() {
 		Format: "${time_rfc3339} ${status} ${method} ${host}${path} ${latency_human}\n",
 	}))
 
-	s.app.POST("/text", s.userHandler.GenerateToken)
-	s.app.POST("/image", s.userHandler.CreateUser)
-	s.app.GET("/audio", s.userHandler.ValidateAccessToken)
+	s.app.POST("/product", s.productHandler.CreateOpinion)
+	s.app.GET("/product", s.productHandler.Find)
+
+	s.app.POST("/opinion", s.opinionHandler.CreateOpinion)
+	s.app.GET("/opinion", s.opinionHandler.Find)
+
+	s.app.POST("/summary", s.summyHandler.CreateOpinion)
+	s.app.GET("/summary", s.summyHandler.Find)
 
 	serverUrl := fmt.Sprintf(":%d", s.cfg.App.Port)
 	s.app.Logger.Fatal(s.app.Start(serverUrl))
