@@ -26,9 +26,16 @@ func (uc SummaryUseCase) Find(id int) (*domain.Summary, error) {
 }
 
 func (uc SummaryUseCase) CreateSummary(summaryDTO *dto.SummarytDTO) (*domain.Summary, error) {
+
+	opinions := make([]domain.Opinion, len(summaryDTO.Opinions))
+	for i, opinionDTO := range summaryDTO.Opinions {
+		opinions[i] = *opinionDTO.ToDomain()
+	}
+
 	summary := domain.NewSummary(
 		summaryDTO.Positive,
 		summaryDTO.Negative,
+		opinions,
 	)
 
 	if err := validator.ValidateStruct(summary); err != nil {
