@@ -11,6 +11,10 @@ type (
 		CreateOpinion(opinionDTO *dto.OpinionDTO) (*domain.Opinion, error)
 	}
 
+	ICalculateTokenUseCase interface {
+		CalculateToken(productID int) ([]domain.Opinion, error)
+	}
+
 	IProductUseCase interface {
 		Find(id int) (*domain.Product, error)
 		CreateProduct(productDTO *dto.ProductDTO) (*domain.Product, error)

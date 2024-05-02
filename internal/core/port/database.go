@@ -1,7 +1,16 @@
 package port
 
-import "gorm.io/gorm"
+import (
+	"github.com/google/generative-ai-go/genai"
+	"gorm.io/gorm"
+)
 
-type IDatabase interface {
-	GetDb() *gorm.DB
-}
+type (
+	IDatabase interface {
+		GetDb() *gorm.DB
+	}
+
+	IModeloGenerativo interface {
+		GetClient() *genai.Client
+	}
+)
