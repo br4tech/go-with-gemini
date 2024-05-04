@@ -25,7 +25,7 @@ func (r *OpinionRepository) Find(id int) (*domain.Opinion, error) {
 	return opinion.ToDomain(), nil
 }
 
-func (r *OpinionRepository) FindByProduct(productId int) ([]*domain.Opinion, error) {
+func (r *OpinionRepository) FindByProductId(productId int) ([]*domain.Opinion, error) {
 	var opinionsModel []*model.Opinion
 
 	if err := r.db.Where("product_id = ?", productId).Find(&opinionsModel).Error; err != nil {
