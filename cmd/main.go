@@ -8,9 +8,19 @@ import (
 
 func main() {
 	cfg := config.GetConfig()
+
 	db := adapter.NewPostgresDatabase(&cfg)
+	// gemini := adapter.NewGeminiAdapter(&cfg)
 
-	// userHandler := InitializeUserHandler(db.GetDb())
+	opinionHandler := InitializeOpinionHandler(db.GetDb())
+	productHandler := InitializeProductHandler(db.GetDb())
+	summaryHandler := InitializeSummaryHandler(db.GetDb())
 
-	server.NewEchoServer(&cfg, db.GetDb()).Start()
+	server.NewEchoServer(
+		&cfg,
+		db.GetDb(),
+		opinionHandler,
+		productHandler,
+		summaryHandler,
+	).Start()
 }
