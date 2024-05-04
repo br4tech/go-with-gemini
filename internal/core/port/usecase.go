@@ -8,6 +8,7 @@ import (
 type (
 	IOpinionUseCase interface {
 		Find(id int) (*domain.Opinion, error)
+		FindByProductId(id int) ([]*domain.Opinion, error)
 		CreateOpinion(opinionDTO *dto.OpinionDTO) (*domain.Opinion, error)
 	}
 
