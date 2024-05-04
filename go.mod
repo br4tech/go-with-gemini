@@ -11,7 +11,14 @@ require (
 	gorm.io/gorm v1.25.10
 )
 
-require github.com/dlclark/regexp2 v1.10.0 // indirect
+require (
+	github.com/dlclark/regexp2 v1.10.0 // indirect
+	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
+	github.com/google/subcommands v1.2.0 // indirect
+	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
+	golang.org/x/mod v0.14.0 // indirect
+	golang.org/x/tools v0.17.0 // indirect
+)
 
 require (
 	cloud.google.com/go v0.112.1 // indirect
@@ -31,6 +38,7 @@ require (
 	github.com/google/generative-ai-go v0.11.0 // indirect
 	github.com/google/s2a-go v0.1.7 // indirect
 	github.com/google/uuid v1.6.0 // indirect
+	github.com/google/wire v0.6.0
 	github.com/googleapis/enterprise-certificate-proxy v0.3.2 // indirect
 	github.com/googleapis/gax-go/v2 v2.12.3 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
