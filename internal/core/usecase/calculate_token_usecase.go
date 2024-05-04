@@ -23,7 +23,7 @@ func NewCalculateTokenUseCase(
 }
 
 func (uc CalculateTokenUseCase) CalculateToken(productID int) ([]domain.Opinion, error) {
-	selectedOpinions, err := uc.opinionRepository.FindByProduct(productID)
+	selectedOpinions, err := uc.opinionRepository.FindByProductId(productID)
 	if err != nil {
 		return nil, err
 	}
