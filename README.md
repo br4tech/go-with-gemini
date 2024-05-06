@@ -34,6 +34,8 @@ go run github.com/google/wire/cmd/wire
 3. Executar aplicacao:
  
 ```bash
+ docker start gemini
+
  go run cmd/wire_gen.go cmd/main.go
 
 ```

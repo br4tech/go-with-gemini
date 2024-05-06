@@ -42,11 +42,11 @@ func (s *echoServer) Start() {
 	}))
 
 	s.app.POST("/product", s.productHandler.CreateProduct)
-	s.app.GET("/product", s.productHandler.Find)
+	s.app.GET("/product/:id", s.productHandler.Find)
 
 	s.app.POST("/opinion", s.opinionHandler.CreateOpinion)
-	s.app.GET("/{product_id}/opinions", s.opinionHandler.FindByProductId)
-	s.app.GET("/opinion", s.opinionHandler.Find)
+	s.app.GET("/:product_id/opinions", s.opinionHandler.FindByProductId)
+	s.app.GET("/opinion/:id", s.opinionHandler.Find)
 
 	s.app.POST("/summary", s.summaryHandler.CreateSummary)
 	s.app.GET("/summary", s.summaryHandler.Find)
