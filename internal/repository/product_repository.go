@@ -16,9 +16,9 @@ func NewProductRepository(db *gorm.DB) port.IProductRepository {
 }
 
 func (r *ProductRepository) Find(id int) (*domain.Product, error) {
-	var product model.Product
+	var product *model.Product
 
-	if err := r.db.Find(id).First(&product).Error; err != nil {
+	if err := r.db.Where("id=?", id).First(&product).Error; err != nil {
 		return nil, err
 	}
 

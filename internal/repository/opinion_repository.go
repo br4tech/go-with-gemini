@@ -16,9 +16,9 @@ func NewOpinionRepository(db *gorm.DB) port.IOpinionRepository {
 }
 
 func (r *OpinionRepository) Find(id int) (*domain.Opinion, error) {
-	var opinion model.Opinion
+	var opinion *model.Opinion
 
-	if err := r.db.Find(id).First(&opinion).Error; err != nil {
+	if err := r.db.Where("id=?", id).First(&opinion).Error; err != nil {
 		return nil, err
 	}
 
