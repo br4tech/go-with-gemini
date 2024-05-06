@@ -2,6 +2,7 @@ package adapter
 
 import (
 	"context"
+	"log"
 
 	"github.com/br4tech/go-with-gemini/config"
 	"github.com/br4tech/go-with-gemini/internal/core/port"
@@ -25,4 +26,19 @@ func NewGeminiAdapter(cfg *config.Config) port.IModeloGenerativo {
 
 func (g *geminiAdapter) GetClient() *genai.Client {
 	return g.Client
+}
+
+func (g *geminiAdapter) Prompt(text string) interface{} {
+	ctx := context.Background()
+
+	model := g.Client.GenerativeModel("gemini-pro")
+	prompt := genai.Text(text)
+
+	resp, err := model.GenerateContent(ctx, prompt)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return resp
 }

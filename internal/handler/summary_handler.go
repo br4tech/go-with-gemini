@@ -1,12 +1,10 @@
 package handler
 
 import (
-	"encoding/json"
 	"net/http"
 	"strconv"
 
 	"github.com/br4tech/go-with-gemini/internal/core/port"
-	"github.com/br4tech/go-with-gemini/internal/dto"
 	"github.com/labstack/echo/v4"
 )
 
@@ -20,44 +18,19 @@ func NewSummaryHandler(summaryUseCase port.ISummaryUseCase) *SummaryHandler {
 	}
 }
 
-func (h *SummaryHandler) Find(c echo.Context) error {
-	id := c.Param("id")
+func (h *SummaryHandler) Positive(c echo.Context) error {
+	product_id := c.Param("product_id")
 
-	summaryID, err := strconv.Atoi(id)
+	productID, err := strconv.Atoi(product_id)
 
 	if err != nil {
 		return HandlerResponse(c, http.StatusBadRequest, "Invalid Summary ID")
 	}
 
-	summary, err := h.summaryUseCase.Find(summaryID)
+	summary, err := h.summaryUseCase.Positive(productID)
 	if err != nil {
 		return HandlerResponse(c, http.StatusNotFound, "Summary not found")
 	}
 
-	summaryJSON, err := json.Marshal(summary)
-	if err != nil {
-		return HandlerResponse(c, http.StatusInternalServerError, "Failed to marshal Summary")
-	}
-
-	return HandlerResponse(c, http.StatusOK, string(summaryJSON))
-}
-
-func (h *SummaryHandler) CreateSummary(c echo.Context) error {
-	reqBody := new(dto.SummarytDTO)
-
-	if err := c.Bind(reqBody); err != nil {
-		return HandlerResponse(c, http.StatusInternalServerError, "Bad request")
-	}
-
-	summary, err := h.summaryUseCase.CreateSummary(reqBody)
-	if err != nil {
-		return HandlerResponse(c, http.StatusInternalServerError, "Failed to created Summary")
-	}
-
-	summaryJSON, err := json.Marshal(summary)
-	if err != nil {
-		return HandlerResponse(c, http.StatusInternalServerError, "Failed to marshal Summary")
-	}
-
-	return HandlerResponse(c, http.StatusCreated, string(summaryJSON))
+	return HandlerResponse(c, http.StatusOK, summary)
 }

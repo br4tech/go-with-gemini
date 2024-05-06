@@ -12,5 +12,6 @@ type (
 
 	IModeloGenerativo interface {
 		GetClient() *genai.Client
+		Prompt(text string) interface{}
 	}
 )

@@ -5,6 +5,7 @@ import (
 
 	"github.com/br4tech/go-with-gemini/config"
 	"github.com/br4tech/go-with-gemini/internal/core/port"
+	"github.com/google/generative-ai-go/genai"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"gorm.io/gorm"
@@ -14,6 +15,7 @@ type echoServer struct {
 	app            *echo.Echo
 	db             *gorm.DB
 	cfg            *config.Config
+	gemini         *genai.Client
 	opinionHandler port.IOpinionHandler
 	productHandler port.IProductHandler
 	summaryHandler port.ISummaryHandler
@@ -22,6 +24,7 @@ type echoServer struct {
 func NewEchoServer(
 	cfg *config.Config,
 	db *gorm.DB,
+	gemini *genai.Client,
 	opinionHandler port.IOpinionHandler,
 	productHandler port.IProductHandler,
 	summaryHandler port.ISummaryHandler,
@@ -48,8 +51,7 @@ func (s *echoServer) Start() {
 	s.app.GET("/:product_id/opinions", s.opinionHandler.FindByProductId)
 	s.app.GET("/opinion/:id", s.opinionHandler.Find)
 
-	s.app.POST("/summary", s.summaryHandler.CreateSummary)
-	s.app.GET("/summary", s.summaryHandler.Find)
+	s.app.POST("/summary/:product_id/positive", s.summaryHandler.Positive)
 
 	serverUrl := fmt.Sprintf(":%d", s.cfg.App.Port)
 	s.app.Logger.Fatal(s.app.Start(serverUrl))

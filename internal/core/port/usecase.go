@@ -16,13 +16,16 @@ type (
 		CalculateToken(productID int) ([]domain.Opinion, error)
 	}
 
+	IAnalyzeOpinionUseCase interface {
+		Positive(opinions []domain.Opinion) (*domain.SummaryPositive, error)
+	}
+
 	IProductUseCase interface {
 		Find(id int) (*domain.Product, error)
 		CreateProduct(productDTO *dto.ProductDTO) (*domain.Product, error)
 	}
 
 	ISummaryUseCase interface {
-		Find(id int) (*domain.Summary, error)
-		CreateSummary(summaryDTO *dto.SummarytDTO) (*domain.Summary, error)
+		Positive(productID int) (*domain.SummaryPositive, error)
 	}
 )

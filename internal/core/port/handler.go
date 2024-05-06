@@ -15,7 +15,6 @@ type (
 	}
 
 	ISummaryHandler interface {
-		Find(c echo.Context) error
-		CreateSummary(c echo.Context) error
+		Positive(c echo.Context) error
 	}
 )

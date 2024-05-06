@@ -10,7 +10,7 @@ func main() {
 	cfg := config.GetConfig()
 
 	db := adapter.NewPostgresDatabase(&cfg)
-	// gemini := adapter.NewGeminiAdapter(&cfg)
+	gemini := adapter.NewGeminiAdapter(&cfg)
 
 	opinionHandler := InitializeOpinionHandler(db.GetDb())
 	productHandler := InitializeProductHandler(db.GetDb())
@@ -19,6 +19,7 @@ func main() {
 	server.NewEchoServer(
 		&cfg,
 		db.GetDb(),
+		gemini.GetClient(),
 		opinionHandler,
 		productHandler,
 		summaryHandler,
