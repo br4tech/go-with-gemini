@@ -8,9 +8,9 @@ import (
 type Opinion struct {
 	gorm.Model
 
-	Id        int    `gorm:"primary_key"`
-	Content   string `gorm:"not null"`
-	ProductID int    `gorm:"column:product_id"`
+	Content   string    `gorm:"column:content;not null"`
+	ProductID int       `gorm:"column:product_id"`
+	Summaries []Summary `gorm:"many2many:opinion_summaries;"`
 }
 
 func (model Opinion) ToDomain() *domain.Opinion {

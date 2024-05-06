@@ -8,7 +8,6 @@ import (
 type Product struct {
 	gorm.Model
 
-	Id    int    `gorm:"primary_key"`
 	Name  string `gorm:"column:name,unique;not null"`
 	Code  string `gorm:"column:code,unique;not null"`
 	Image string `gorm:"column:image"`
