@@ -3,11 +3,11 @@ package handler
 import "github.com/labstack/echo/v4"
 
 type BaseResponse struct {
-	Message string `json:"message"`
+	Data interface{} `json:"data,omitempty"`
 }
 
-func HandlerResponse(c echo.Context, responseCode int, message string) error {
+func HandlerResponse(c echo.Context, responseCode int, data interface{}) error {
 	return c.JSON(responseCode, &BaseResponse{
-		Message: message,
+		Data: data,
 	})
 }

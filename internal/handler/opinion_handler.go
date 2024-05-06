@@ -34,12 +34,7 @@ func (h *OpinionHandler) Find(c echo.Context) error {
 		return HandlerResponse(c, http.StatusNotFound, "Opinion not found")
 	}
 
-	opinionJSON, err := json.Marshal(opinion)
-	if err != nil {
-		return HandlerResponse(c, http.StatusInternalServerError, "Failed to marshal opinion")
-	}
-
-	return HandlerResponse(c, http.StatusOK, string(opinionJSON))
+	return HandlerResponse(c, http.StatusOK, opinion)
 }
 
 func (h *OpinionHandler) FindByProductId(c echo.Context) error {
@@ -56,12 +51,7 @@ func (h *OpinionHandler) FindByProductId(c echo.Context) error {
 		return HandlerResponse(c, http.StatusNotFound, "Opinion not found")
 	}
 
-	opinionsJSON, err := json.Marshal(opinions)
-	if err != nil {
-		return HandlerResponse(c, http.StatusInternalServerError, "Failed to marshal opinion")
-	}
-
-	return HandlerResponse(c, http.StatusOK, string(opinionsJSON))
+	return HandlerResponse(c, http.StatusOK, opinions)
 }
 
 func (h *OpinionHandler) CreateOpinion(c echo.Context) error {
