@@ -32,6 +32,17 @@ go run github.com/google/wire/cmd/wire
 ```
 
 3. Executar aplicacao:
+
+Com docker:
+
+```bash
+ docker-compose build
+
+ docker-compose up
+
+```
+
+Sem docker
  
 ```bash
  docker start gemini
