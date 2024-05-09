@@ -25,6 +25,16 @@ func (uc *OpinionUseCase) Find(id int) (*domain.Opinion, error) {
 	return opinion, nil
 }
 
+func (uc *OpinionUseCase) FindByProductId(id int) ([]*domain.Opinion, error) {
+	opinions, err := uc.opinionRepository.FindByProductId(id)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return opinions, nil
+}
+
 func (uc *OpinionUseCase) CreateOpinion(opinionDTO *dto.OpinionDTO) (*domain.Opinion, error) {
 	opinion := domain.NewOpinion(
 		opinionDTO.Content,

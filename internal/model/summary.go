@@ -1,6 +1,8 @@
 package model
 
 import (
+	"strings"
+
 	"github.com/br4tech/go-with-gemini/internal/core/domain"
 	"gorm.io/gorm"
 )
@@ -8,16 +10,15 @@ import (
 type Summary struct {
 	gorm.Model
 
-	Id       int       `gorm:"primary_key"`
-	Positive []string  `gorm:"column:positive"`
-	Negative []string  `gorm:"column:negative"`
-	Opinions []Opinion `gorm:"2many:opinion_summaries"`
+	Positives string    `gorm:"type:text"`
+	Negatives string    `gorm:"type:text"`
+	Opinions  []Opinion `gorm:"many2many:opinion_summaries;"`
 }
 
-func (model Summary) ToDomain() *domain.Summary {
+func (model *Summary) ToDomain() *domain.Summary {
 	domain := &domain.Summary{
-		Positive: model.Positive,
-		Negative: model.Negative,
+		Positive: strings.Split(model.Positives, ","),
+		Negative: strings.Split(model.Negatives, ","),
 	}
 
 	for _, opinion := range model.Opinions {
@@ -28,8 +29,8 @@ func (model Summary) ToDomain() *domain.Summary {
 }
 
 func (model *Summary) FromDomain(domain *domain.Summary) {
-	model.Positive = domain.Positive
-	model.Negative = domain.Negative
+	model.Positives = strings.Join(domain.Positive, ",")
+	model.Negatives = strings.Join(domain.Negative, ",")
 
 	for _, domainOpinion := range domain.Opinions {
 		opinion := &Opinion{}
@@ -37,5 +38,4 @@ func (model *Summary) FromDomain(domain *domain.Summary) {
 
 		model.Opinions = append(model.Opinions, *opinion)
 	}
-
 }

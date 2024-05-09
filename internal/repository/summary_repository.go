@@ -16,9 +16,9 @@ func NewSummaryRepository(db *gorm.DB) port.ISummaryRepository {
 }
 
 func (r *SummaryRepository) Find(id int) (*domain.Summary, error) {
-	var summary model.Summary
+	var summary *model.Summary
 
-	if err := r.db.Find(id).First(&summary).Error; err != nil {
+	if err := r.db.Where("id=?", id).First(&summary).Error; err != nil {
 		return nil, err
 	}
 

@@ -8,6 +8,7 @@ import (
 type (
 	IOpinionRepository interface {
 		Find(id int) (*domain.Opinion, error)
+		FindByProductId(productId int) ([]*domain.Opinion, error)
 		CreateOpinion(opinion *domain.Opinion) (*model.Opinion, error)
 	}
 

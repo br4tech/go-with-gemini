@@ -34,12 +34,24 @@ func (h *OpinionHandler) Find(c echo.Context) error {
 		return HandlerResponse(c, http.StatusNotFound, "Opinion not found")
 	}
 
-	opinionJSON, err := json.Marshal(opinion)
+	return HandlerResponse(c, http.StatusOK, opinion)
+}
+
+func (h *OpinionHandler) FindByProductId(c echo.Context) error {
+	id := c.Param("product_id")
+
+	productID, err := strconv.Atoi(id)
+
 	if err != nil {
-		return HandlerResponse(c, http.StatusInternalServerError, "Failed to marshal opinion")
+		return HandlerResponse(c, http.StatusBadRequest, "Invalid product ID")
 	}
 
-	return HandlerResponse(c, http.StatusOK, string(opinionJSON))
+	opinions, err := h.opinionUseCase.FindByProductId(productID)
+	if err != nil {
+		return HandlerResponse(c, http.StatusNotFound, "Opinion not found")
+	}
+
+	return HandlerResponse(c, http.StatusOK, opinions)
 }
 
 func (h *OpinionHandler) CreateOpinion(c echo.Context) error {

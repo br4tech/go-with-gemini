@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"encoding/json"
 	"net/http"
 	"strconv"
 
@@ -34,12 +33,7 @@ func (h *ProductHandler) Find(c echo.Context) error {
 		return HandlerResponse(c, http.StatusNotFound, "Product not found")
 	}
 
-	productJSON, err := json.Marshal(product)
-	if err != nil {
-		return HandlerResponse(c, http.StatusInternalServerError, "Failed to marshal Product")
-	}
-
-	return HandlerResponse(c, http.StatusOK, string(productJSON))
+	return HandlerResponse(c, http.StatusOK, product)
 }
 
 func (h *ProductHandler) CreateProduct(c echo.Context) error {
@@ -54,10 +48,5 @@ func (h *ProductHandler) CreateProduct(c echo.Context) error {
 		return HandlerResponse(c, http.StatusInternalServerError, "Failed to created Product")
 	}
 
-	productJSON, err := json.Marshal(product)
-	if err != nil {
-		return HandlerResponse(c, http.StatusInternalServerError, "Failed to marshal Product")
-	}
-
-	return HandlerResponse(c, http.StatusCreated, string(productJSON))
+	return HandlerResponse(c, http.StatusCreated, product)
 }
