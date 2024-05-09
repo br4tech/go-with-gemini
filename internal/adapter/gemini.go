@@ -28,7 +28,7 @@ func (g *geminiAdapter) GetClient() *genai.Client {
 	return g.Client
 }
 
-func (g *geminiAdapter) Prompt(text string) interface{} {
+func (g *geminiAdapter) Prompt(text string) []genai.Part {
 	ctx := context.Background()
 
 	model := g.Client.GenerativeModel("gemini-pro")
@@ -40,5 +40,5 @@ func (g *geminiAdapter) Prompt(text string) interface{} {
 		log.Fatal(err)
 	}
 
-	return resp
+	return resp.Candidates[0].Content.Parts
 }

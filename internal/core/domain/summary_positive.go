@@ -1,11 +1,11 @@
 package domain
 
 type SummaryPositive struct {
-	Positive []string
+	PositiveAspects []string `json:"positive_aspects"`
 }
 
-func NewSummaryPositive(positive []string) *SummaryPositive {
+func NewSummaryPositive(positive_aspects []string) *SummaryPositive {
 	return &SummaryPositive{
-		Positive: positive,
+		PositiveAspects: positive_aspects,
 	}
 }
