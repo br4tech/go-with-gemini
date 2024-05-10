@@ -18,6 +18,7 @@ type (
 
 	IAnalyzeOpinionUseCase interface {
 		Positive(opinions []domain.Opinion) (*domain.SummaryPositive, error)
+		Negative(opinions []domain.Opinion) (*domain.SummaryNegative, error)
 	}
 
 	IProductUseCase interface {
@@ -27,5 +28,6 @@ type (
 
 	ISummaryUseCase interface {
 		Positive(productID int) (*domain.SummaryPositive, error)
+		Negative(productID int) (*domain.SummaryNegative, error)
 	}
 )

@@ -34,3 +34,20 @@ func (h *SummaryHandler) Positive(c echo.Context) error {
 
 	return HandlerResponse(c, http.StatusOK, summary)
 }
+
+func (h *SummaryHandler) Negative(c echo.Context) error {
+	product_id := c.Param("product_id")
+
+	productID, err := strconv.Atoi(product_id)
+
+	if err != nil {
+		return HandlerResponse(c, http.StatusBadRequest, "Invalid Summary ID")
+	}
+
+	summary, err := h.summaryUseCase.Negative(productID)
+	if err != nil {
+		return HandlerResponse(c, http.StatusNotFound, "Summary not found")
+	}
+
+	return HandlerResponse(c, http.StatusOK, summary)
+}

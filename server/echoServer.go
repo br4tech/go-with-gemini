@@ -52,6 +52,7 @@ func (s *echoServer) Start() {
 	s.app.GET("/opinion/:id", s.opinionHandler.Find)
 
 	s.app.GET("/summary/:product_id/positive", s.summaryHandler.Positive)
+	s.app.GET("/summary/:product_id/negative", s.summaryHandler.Negative)
 
 	serverUrl := fmt.Sprintf(":%d", s.cfg.App.Port)
 	s.app.Logger.Fatal(s.app.Start(serverUrl))

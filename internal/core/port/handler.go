@@ -16,5 +16,6 @@ type (
 
 	ISummaryHandler interface {
 		Positive(c echo.Context) error
+		Negative(c echo.Context) error
 	}
 )

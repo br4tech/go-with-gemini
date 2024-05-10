@@ -38,3 +38,19 @@ func (uc SummaryUseCase) Positive(productID int) (*domain.SummaryPositive, error
 
 	return summary, nil
 }
+
+func (uc SummaryUseCase) Negative(productID int) (*domain.SummaryNegative, error) {
+	opinions, err := uc.calculateTokenUseCase.CalculateToken(productID)
+
+	if err != nil {
+		return nil, err
+	}
+
+	summary, err := uc.analyzeOpinionUseCase.Negative(opinions)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return summary, nil
+}
