@@ -3,10 +3,10 @@ app:
     port: 8080
   
 database:
-  host: dpg-cov1bh8l6cac73bdh1l0-a
+  host: db
   port: 5432
-  user: geminidb
-  password: SandTAatak7TdyNTWKGgD1TGJlckdvbM
+  user: postgres
+  password: 123456
   dbname: geminidb
   sslmode: disable
   timezone: America/Sao_Paulo
