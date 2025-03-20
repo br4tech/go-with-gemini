@@ -3,6 +3,8 @@ package usecase
 import (
 	"encoding/json"
 	"fmt"
+	"regexp"
+	"strings"
 
 	"github.com/br4tech/go-with-gemini/internal/core/domain"
 	"github.com/br4tech/go-with-gemini/internal/core/port"
@@ -41,7 +43,17 @@ func (uc AnalyzeOpinionUseCase) Positive(opinions []domain.Opinion) (*domain.Sum
 	for _, part := range parts {
 		switch part.(type) {
 		case genai.Text:
-			text := part.(genai.Text)
+			text := string(part.(genai.Text))
+
+			re := regexp.MustCompile("```json")
+			text = re.ReplaceAllString(text, "")
+
+			text = strings.TrimSpace(text)
+
+			text = strings.TrimSuffix(text, "```")
+
+			text = strings.TrimSpace(text)
+
 			if err := json.Unmarshal([]byte(text), &positives); err != nil {
 				fmt.Println("Erro ao decodificar JSON:", err)
 				return nil, nil
@@ -64,7 +76,7 @@ func (uc AnalyzeOpinionUseCase) Negative(opinions []domain.Opinion) (*domain.Sum
 			 Opinioes: `
 
 	for i, opinion := range opinions {
-		prompt += fmt.Sprintf("%d. %s\n", i+1, opinion)
+		prompt += fmt.Sprintf("%d. %s", i+1, opinion)
 	}
 
 	var parts = uc.modelo.Prompt(prompt)
@@ -73,7 +85,21 @@ func (uc AnalyzeOpinionUseCase) Negative(opinions []domain.Opinion) (*domain.Sum
 	for _, part := range parts {
 		switch part.(type) {
 		case genai.Text:
-			text := part.(genai.Text)
+			text := string(part.(genai.Text))
+
+			// Remove as crases e o "json\n"
+			re := regexp.MustCompile("```json")
+			text = re.ReplaceAllString(text, "")
+
+			// Remove espaços e quebras de linha extras do final
+			text = strings.TrimSpace(text)
+
+			// Remove as crases finais, se existirem
+			text = strings.TrimSuffix(text, "```")
+
+			// Remove espaços e quebras de linha extras do final novamente (após remover "```")
+			text = strings.TrimSpace(text)
+
 			if err := json.Unmarshal([]byte(text), &negatives); err != nil {
 				fmt.Println("Erro ao decodificar JSON:", err)
 				return nil, nil
