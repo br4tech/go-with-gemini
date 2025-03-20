@@ -3,8 +3,8 @@ app:
     port: 8080
   
 database:
-  host: db
-  port: 5432
+  host: localhost
+  port: 5433
   user: postgres
   password: 123456
   dbname: geminidb
@@ -12,4 +12,4 @@ database:
   timezone: America/Sao_Paulo
   
 gemini:
-  api_key: AIzaSyAvyhRX_7y3uYazNp9nK9qu-xPin8ehh2U  
+  api_key: AIzaSyBW9H5CHX2IZXWFxoSe3HK-31jPpoxre7g 

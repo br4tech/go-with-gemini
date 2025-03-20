@@ -31,7 +31,7 @@ func (g *geminiAdapter) GetClient() *genai.Client {
 func (g *geminiAdapter) Prompt(text string) []genai.Part {
 	ctx := context.Background()
 
-	model := g.Client.GenerativeModel("gemini-pro")
+	model := g.Client.GenerativeModel("gemini-2.0-flash")
 	prompt := genai.Text(text)
 
 	resp, err := model.GenerateContent(ctx, prompt)

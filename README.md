@@ -11,7 +11,7 @@ O Gemini é uma nova ferramenta de Inteligência Artificial desenvolvida pelo Go
 Antes de começar, certifique-se de ter instalado o seguinte em sua máquina:
 
 - Golang: [Download e instruções de instalação](https://golang.org/dl/)
-- SDK do Gemini: [Documentação e instruções de instalação](https://gemini.google.com/sdk)
+- SDK do Gemini: [Documentação e instruções de instalação](https://ai.google.dev/gemini-api/docs/sdks?hl=pt-br#go-quickstart)
 
 ## Instalação e Configuração
 
@@ -38,7 +38,7 @@ Com docker:
 ```bash
  docker-compose build
 
- docker-compose up
+ docker-compose up app
 
 ```
 
@@ -64,3 +64,16 @@ Caso nao tenha o banco criado execute os comando, abaixo antes de tudo:
   psql -U postgres
 
   CREATE DATABASE geminidb;
+  ```
+
+4. Para criar um produto:
+
+```bash
+curl --location 'localhost:8080/product' \
+--header 'Content-Type: application/json' \
+--data '{
+    "name": "Produto 2",
+    "code": "XXX2",
+    "image": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fprotelimp.com.br%2Fproduto%2Fcasa-perfume-agradable-500ml%2F&psig=AOvVaw3TU3W8R725EEPsNTzGP8VK&ust=1715091303808000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCOCnzJCb-YUDFQAAAAAdAAAAABAE"
+}'
+```
