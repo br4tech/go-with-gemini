@@ -12,4 +12,4 @@ database:
   timezone: America/Sao_Paulo
 
 gemini:
-  api_key: AIzaSyCBydeEwc2CUpi2SJ4Lu2gelqRe69aGCNs
+  api_key: gemini-key
