@@ -11,10 +11,12 @@ services:
       - db
     environment:
       POSTGRES_HOST: db
-      POSTGRES_PORT: 5433
+      POSTGRES_PORT: 5432
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123456
       POSTGRES_DB: geminidb
+    networks:
+      - minha_rede
 
   db:
     image: postgres
@@ -24,10 +26,18 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123456
       POSTGRES_DB: geminidb
-      
+    networks:
+      - minha_rede
+
   migration:
     build:
       context: .
       dockerfile: Dockerfile.migration
     depends_on:
       - db
+    networks:
+      - minha_rede
+
+networks:
+  minha_rede:
+    driver: bridge
