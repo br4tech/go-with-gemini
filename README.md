@@ -1,79 +1,114 @@
-# Projeto de Integração Golang com Gemini SDK
+# Projeto de Integração Golang com Gemini SDK: Explorando o Poder da IA do Google
 
-Este é um projeto de exemplo que demonstra como integrar Golang com o Gemini, utilizando a SDK fornecida pelo Google.
+Este projeto de exemplo tem como objetivo demonstrar, de forma prática e direta, como integrar a linguagem de programação Golang com o Gemini, a poderosa ferramenta de Inteligência Artificial desenvolvida pelo Google, utilizando a SDK oficial.
 
-## Sobre o Gemini
+## Desvendando o Gemini: A Inteligência Artificial do Google ao Seu Alcance
 
-O Gemini é uma nova ferramenta de Inteligência Artificial desenvolvida pelo Google. Ele oferece uma variedade de recursos avançados de IA, incluindo reconhecimento de voz, processamento de linguagem natural e muito mais.
+O Gemini representa a mais recente inovação do Google no campo da Inteligência Artificial. Essa plataforma versátil oferece uma ampla gama de recursos avançados, incluindo:
 
-## Pré-requisitos
+* **Reconhecimento de Voz:** Permite a interação com sistemas através da fala.
+* **Processamento de Linguagem Natural (PLN):** Capacidade de entender e gerar texto em linguagem humana.
+* **Visão Computacional:** Habilidade de interpretar e analisar informações visuais.
+* **E muito mais!**
 
-Antes de começar, certifique-se de ter instalado o seguinte em sua máquina:
+Este projeto focará em como utilizar algumas dessas capacidades dentro de uma aplicação Golang.
 
-- Golang: [Download e instruções de instalação](https://golang.org/dl/)
-- SDK do Gemini: [Documentação e instruções de instalação](https://ai.google.dev/gemini-api/docs/sdks?hl=pt-br#go-quickstart)
+## Preparando o Terreno: Pré-requisitos Essenciais
 
-## Instalação e Configuração
+Antes de mergulhar no código, certifique-se de que o seu ambiente de desenvolvimento possui as seguintes ferramentas instaladas e configuradas:
 
-1. Clone este repositório para o seu ambiente local:
+* **Golang:** A linguagem de programação que impulsiona este projeto.
+    * **Download e Instruções de Instalação:** Você pode encontrar o guia completo para instalação no site oficial: [https://golang.org/dl/](https://golang.org/dl/)
 
-```bash
-git clone https://github.com/br4tech/go-with-gemini.git
-cd go-with-gemini
+* **SDK do Gemini para Golang:** A biblioteca que facilita a comunicação entre sua aplicação Golang e os serviços do Gemini.
+    * **Documentação e Instruções de Instalação:** Para instalar e configurar a SDK corretamente, siga as instruções detalhadas na documentação oficial: [https://ai.google.dev/gemini-api/docs/sdks?hl=pt-br#go-quickstart](https://ai.google.dev/gemini-api/docs/sdks?hl=pt-br#go-quickstart)
 
-```
+## Mãos à Obra: Instalação e Configuração do Projeto
 
+Siga estes passos para configurar o projeto em sua máquina local:
 
-2. Gerar o arquivo do wire:
+1.  **Clone o Repositório:** Utilize o Git para copiar o código fonte do projeto para o seu computador. Abra seu terminal ou prompt de comando e execute:
 
-```bash
-go run github.com/google/wire/cmd/wire
+    ```bash
+    git clone [https://github.com/br4tech/go-with-gemini.git](https://github.com/br4tech/go-with-gemini.git)
+    cd go-with-gemini
+    ```
 
-```
+2.  **Gere o Código Wire:** O Wire é uma ferramenta para injeção de dependências em Go. Execute o seguinte comando para gerar o código necessário:
 
-3. Executar aplicacao:
+    ```bash
+    go run [github.com/google/wire/cmd/wire](https://github.com/google/wire/cmd/wire)
+    ```
 
-Com docker:
+3.  **Execute a Aplicação:** Você tem duas opções para executar o projeto, utilizando Docker ou diretamente no seu ambiente local:
 
-```bash
- docker-compose build
+    **a) Utilizando Docker (Recomendado para um ambiente isolado):**
 
- docker-compose up app
+    Certifique-se de ter o Docker e o Docker Compose instalados em sua máquina. Execute os seguintes comandos na raiz do projeto:
 
-```
+    ```bash
+    docker-compose build
+    docker-compose up app
+    ```
 
-Sem docker
- 
-```bash
- docker start gemini
+    Este comando irá construir a imagem Docker e iniciar o container da aplicação.
 
- go run cmd/wire_gen.go cmd/main.go
+    **b) Executando Sem Docker (Requer PostgreSQL instalado localmente):**
 
-```
+    Se você optar por não usar o Docker, siga estes passos:
 
-Obs: 
+    * **Inicie o Banco de Dados PostgreSQL:** Assumindo que você tem o PostgreSQL instalado e configurado, inicie o servidor. O comando abaixo inicia um container Docker do PostgreSQL para facilitar, caso você não tenha um rodando localmente:
 
-Caso nao tenha o banco criado execute os comando, abaixo antes de tudo:
+        ```bash
+        docker run --name gemini -e POSTGRES_PASSWORD=123456 -d -p 5434:5432 postgres
+        ```
 
-```bash
+    * **Crie o Banco de Dados:** Conecte-se ao servidor PostgreSQL e crie o banco de dados `geminidb`. Se você usou o container Docker, pode fazer isso com os seguintes comandos:
 
-  docker run --name gemini -e POSTGRES_PASSWORD=123456 -d -p 5434:5432 postgres
-  
-  docker exec -it gemini bash
+        ```bash
+        docker exec -it gemini bash
+        psql -U postgres
+        CREATE DATABASE geminidb;
+        \q # Para sair do psql
+        exit # Para sair do container
+        ```
 
-  psql -U postgres
+    * **Execute a Aplicação Golang:** Finalmente, execute a aplicação Golang:
 
-  CREATE DATABASE geminidb;
-  ```
+        ```bash
+        go run cmd/wire_gen.go cmd/main.go
+        ```
 
-4. Para criar um produto:
+## Interagindo com a Aplicação: Criando um Produto
+
+Com a aplicação em execução (geralmente na porta `8080`), você pode interagir com ela para criar novos produtos. Utilize o `curl` no seu terminal para enviar uma requisição HTTP POST:
 
 ```bash
 curl --location 'localhost:8080/product' \
 --header 'Content-Type: application/json' \
 --data '{
-    "name": "Produto 2",
-    "code": "XXX2",
-    "image": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fprotelimp.com.br%2Fproduto%2Fcasa-perfume-agradable-500ml%2F&psig=AOvVaw3TU3W8R725EEPsNTzGP8VK&ust=1715091303808000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCOCnzJCb-YUDFQAAAAAdAAAAABAE"
+    "name": "Nome do Produto",
+    "code": "CODIGO_UNICO",
+    "image": "URL_DA_IMAGEM_DO_PRODUTO"
 }'
 ```
+
+Substitua os valores entre as aspas com as informações do produto que você deseja criar. Por exemplo:
+
+```bash
+curl --location 'localhost:8080/product' \
+--header 'Content-Type: application/json' \
+--data '{
+    "name": "Produto Fantástico",
+    "code": "PROD001",
+    "image": "[https://exemplo.com/imagem_produto.jpg](https://exemplo.com/imagem_produto.jpg)"
+}'
+```
+
+## Explorando a API com o Postman
+
+Para facilitar a exploração e o teste da API do projeto, uma Collection do Postman está disponível. Você pode importá-la utilizando o seguinte link:
+
+[https://app.getpostman.com/join-team?invite_code=b90555d01a13ab0e308495a2e081d08a4434bf28414e9f3aeb735f4e5bd2f3ff](https://app.getpostman.com/join-team?invite_code=b90555d01a13ab0e308495a2e081d08a4434bf28414e9f3aeb735f4e5bd2f3ff)
+
+Ao acessar este link, você poderá importar a Collection para o seu Postman e encontrar requisições de exemplo para interagir com a API de forma mais visual e organizada.
